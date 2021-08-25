@@ -56,32 +56,46 @@ function playRound(playerSelection, computerSelection) {
   }
 }
 
-//create new function 'game'
 function game() {
-  //create 2 counter variables 'playerScore' 'computerScore'
-  //let playerScore = 0;
-  //let computerScore = 0;
-//create for loop that calls playRound 5 times
-//inside the for loop, console.log the result of the round and the current scores
-  for (let i = 1; i <= 5; i++) {
-    const playerSelection = prompt('What\'s your choice?');
-    const computerSelection = computerPlay();
-    console.log(playRound(playerSelection, computerSelection));
-    console.log(`Player: ${playerScore} Computer: ${computerScore}`);
-  }
-//if playerScore is higher than computerScore, player wins!
-//else IF  computer wins :(
-// else its a tie
-  if (playerScore > computerScore) {
-    return alert('CONGRATS, YOU BEAT THE COMPUTER!');
-  } else if (computerScore > playerScore) {
-    return alert('You lost against the computer :(');
-  } else {
-    return alert('Somehow the game ended in a tie...')
-  }
+  const resultsContainer = document.querySelector('#resultsContainer');
+
+  const roundResults = document.createElement('div');
+  const scoreResults = document.createElement('div');
+
+  const playerSelectionButtons = document.querySelectorAll('.playerSelectionButtons');
+
+  playerSelectionButtons.forEach((button) => {
+  
+    button.addEventListener('click', () => {
+      let playerSelection = button.value;
+      let computerSelection = computerPlay();
+
+      roundResults.textContent = playRound(playerSelection, computerSelection);
+      scoreResults.textContent = 'Player Score: ' + playerScore + ' Computer Score: ' + computerScore;
+
+      resultsContainer.appendChild(roundResults);
+      resultsContainer.appendChild(scoreResults);
+
+
+      if (playerScore === 5 || computerScore === 5) {
+
+        if (playerScore > computerScore) {
+          return alert('CONGRATS, YOU BEAT THE COMPUTER!');
+        } else if (computerScore > playerScore) {
+            return alert('You lost against the computer :(');
+          } else {
+              return alert('The game ended in a tie...')
+            }
+      }
+    });
+  });
+
+
+
 }
 
-
+//global score variables
 let playerScore = 0;
 let computerScore = 0;
+
 game();
